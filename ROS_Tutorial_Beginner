@@ -65,3 +65,7 @@
          '---' 기호를 이용하여 상단부가 요청, 하단부다 응답으로 구분
  - 설정은 튜토리얼 참고
  - $ rosmsg show [message type] // ex)$ rosmsg show beginner_tutorials/Num
+ 
+8. ROSCORE kill
+ - killall -9 roscore
+ - killall -9 rosmaster

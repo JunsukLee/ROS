@@ -1,0 +1,67 @@
+## summary - ROS Tutorial Beginner
+## Date 2016. 7. 6
+
+
+1. Create a ROS Workspace
+ - ex)$ mkdir -p ~/catkin_ws/src
+ - ex)$ cd ~/catkin_ws/src
+ - ex)$ catkin_init_workspace ( making CMakeLists.txt in src )
+ - cd ~/catkin_ws
+ - ex)$ catkin_make ( making build, devel in catkin_ws, through src/CMakeLists.txt linking)
+                    ( devel 은 설정 파일와 관련 )
+ - source devel/setup.bash
+
+2. ROS Filesystem
+ - $ rospack find roscpp // rospack 는 패키지 정보를 갖고 있음
+                       // find는 package의 path를 return [ rospack find [package_name] ]
+ - $ roscd // cd와 유사, accessing only find ROS packages
+         // or ROS packages의 subdirectories에도 가능
+ - $ rosls // ls와 유사
+ - $ roscp [package_name] [file_to_copy_path] [copy_path] // cp와 유사
+
+
+3. Creating a ROS Package
+ - ex)$ catkin_create_pkg beginner_tutorials std_msgs rospy roscpp
+ -  // catkin_create_pkg <package_name> [depend1] [depend2] [depend3]
+ - ex) cd ~/catkin_ws
+ - ex) catkin_make
+ - ex) . ~/catkin_ws/devel/setup.bash
+ - ex)$ rospack depends1 beginner_tutorials // 의존성 확인
+ - // beginner_tutorials는 이제 package로 등록되었으므로 roscd 명령어로 이동이 가능해짐
+
+4. ROS Nodes
+ - Overview → Nodes    : 다른 노드와 통신이 가능한 것
+                  → Messages : topic을 receive, send
+                  → Topics   : messages에 실림
+                  → Master   : name service for ROS
+                  → rosout   : ROS equivalent of stdout/stderr
+                  → roscore  : Master+ rosout + parameter server
+ - ex)$ roscore // ros엔진을 실행
+ - ex)$ rosnode list // Information about ros nodes that are currently runnings.
+ - ex)$ rosnode info [ros node] // This gave us some more information about [ros node]
+ - $ rosrun [package_name] [node_name]
+ - ex)$ rosrun turtlesim turtlesim_node
+ - rosnode ping [ros node] // rosnode ping my_turtle
+ 
+5. ROS Topics
+ - $ rosrun rqt_graph rqt_graph // rqt_graph creates a dynamic graph of ros system.
+                              // rqt_graph is part of the rqt package.
+ - $ rostopic // rostopic tool allows you to get information about ROS topics.
+              // rostopic -h // to get the available sub-commands for rostopic
+ - $ rostopic echo [topic] // ex) rostopic echo /turtle1/command_velocity
+ - $ rosmsg show [topic] // ex)$ rosmsg show turtlesim/Velocity // details of the message
+ - $ rostopic pub [topic] [msg_type] [args]
+    //ex)$ rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'
+ - $ rosrun rqt_plot rqt_plot // rqt_plot displays a scrolling time plot of the data published on topics.
+
+6. Using rqt_console and roslaunch
+ - $ rosrun rqt_console rqt_console
+ - $ rosrun rqt_logger_level rqt_logger_level
+
+7. Creating a ROS msg and srv
+ - msg : ROS의 메세지 파일
+         msg파일은 field type 및 field name으로 구성
+ - srv : ROS의 서비스 파일, 요청과 응답으로 구분이 가능
+         '---' 기호를 이용하여 상단부가 요청, 하단부다 응답으로 구분
+ - 설정은 튜토리얼 참고
+ - $ rosmsg show [message type] // ex)$ rosmsg show beginner_tutorials/Num
